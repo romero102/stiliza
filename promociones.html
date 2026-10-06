@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promociones · Stiliza</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/promociones.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        const tema = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', tema);
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.webp" alt="Stiliza" class="logo-img" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <span class="logo-name">Stiliza</span>
+                    <span class="logo-sub">· vestidos que te definen</span>
+                </div>
+            </a>
+            <nav class="nav">
+                <a href="index.html">Inicio</a>
+                <a href="catalogo.html">Catálogo</a>
+                <a href="promociones.html" class="active">Promociones</a>
+                <a href="ubicacion.html">Ubicación</a>
+                <a href="contacto.html">Contacto</a>
+                <button id="toggleTheme" class="theme-toggle">🌙</button>
+                <div id="userInfo" class="user-info" style="display:none;"></div>
+                <button id="btnAbrirLogin" class="btn-login">Ingresar</button>
+                <a href="#" id="abrirCarrito" class="nav-carrito">
+                    <span class="carrito-icon">🛍️</span>
+                    <span class="carrito-badge" id="carritoBadge">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="promociones-page">
+        <div class="container">
+            <h1>🌸 Promociones especiales</h1>
+            <p class="subtitulo">Aprovecha nuestras ofertas y descuentos exclusivos</p>
+
+            <div class="promociones-grid" id="promocionesGrid">
+                <!-- Se llena con JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL PROMOCIÓN -->
+    <div class="modal-overlay" id="modalPromocion">
+        <div class="modal-promocion">
+            <button class="cerrar-modal" id="cerrarModalPromocion">✕</button>
+            <div class="promocion-detalle">
+                <div class="promocion-img" id="promoImg"></div>
+                <div class="promocion-info">
+                    <span class="promo-badge-modal" id="promoBadge">-20%</span>
+                    <h2 id="promoNombre">Promoción</h2>
+                    <p id="promoDesc"></p>
+                    <div class="promo-precios" id="promoPrecios"></div>
+                    <p class="promo-fecha-modal" id="promoFecha"></p>
+                    <button class="btn-pagar" id="btnAgregarPromo">
+                        🛍️ Añadir al carrito con descuento
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo">Stiliza<span>·</span></a>
+                    <p>Vestidos que te definen.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Enlaces</h5>
+                    <a href="catalogo.html">Catálogo</a>
+                    <a href="promociones.html">Promociones</a>
+                    <a href="ubicacion.html">Ubicación</a>
+                    <a href="contacto.html">Contacto</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Contacto</h5>
+                    <p>+591 74954029</p>
+                    <p>info@stiliza.com</p>
+                    <p>Mercado Central Satélite Norte, Warnes</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Síguenos</h5>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/condoripadillas" target="_blank" rel="noopener">Instagram</a>
+                        <a href="https://www.facebook.com/share/19QPyMTczA/" target="_blank" rel="noopener">Facebook</a>
+                        <a href="https://www.tiktok.com/@stilizavestidoselegancia" target="_blank" rel="noopener">TikTok</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <small>© 2026 Stiliza · Todos los derechos reservados</small>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="modalLogin">
+        <div class="modal-login">
+            <button class="cerrar-modal" id="cerrarModalLogin">✕</button>
+            <div class="modal-header"><span class="modal-icon">✦</span><h2>Ingresar</h2></div>
+            <form id="formLogin">
+                <div class="form-group"><label>Nombre (opcional)</label><input type="text" id="loginName"></div>
+                <div class="form-group"><label>Correo *</label><input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group" id="loginPassGroup" style="display:none;">
+                    <label for="loginPassword">Contraseña *</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" minlength="6"></div>
+                <button type="submit" class="btn-pagar"><span>Continuar</span></button>
+                <div id="loginMensaje" class="mensaje-exito" style="display:none;"></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalCarrito">
+        <div class="modal-carrito">
+            <button class="cerrar-modal" id="cerrarModalCarrito">✕</button>
+            <div class="modal-header"><span class="modal-icon">🛍️</span><h2>Tu carrito</h2></div>
+            <div id="carritoContenido"></div>
+            <div class="carrito-total"><span>Total:</span><span id="totalCarrito">Bs 0.00</span></div>
+            <div class="anticipo-info"><p>Anticipo (20%): <strong id="anticipoCarrito">Bs 0.00</strong></p></div>
+            <div class="carrito-acciones">
+                <button class="btn btn-secundario" id="vaciarCarrito">Vaciar</button>
+                <button class="btn btn-primario" id="procederPago">Reservar (20%)</button>
+            </div>
+        </div>
+    </div>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/services/products.js"></script>
+    <script src="js/services/reservations.js"></script>
+    <script src="js/services/employees.js"></script>
+    <script src="js/services/messages.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/promociones.js"></script>
+</body>
+</html>

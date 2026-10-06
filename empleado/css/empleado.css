@@ -1,0 +1,152 @@
+/* Reutiliza estilos del panel dueño */
+@import url('../../dueno/css/dueno.css');
+
+.reserva-card {
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    background: var(--bg-primary);
+}
+
+.reserva-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.badge {
+    padding: 0.25rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge.pendiente {
+    background: rgba(180, 139, 122, 0.15);
+    color: var(--accent);
+}
+
+.badge.recogido {
+    background: rgba(45, 122, 90, 0.15);
+    color: #2d7a5a;
+}
+
+.badge.expirado {
+    background: rgba(231, 76, 60, 0.12);
+    color: #e74c3c;
+}
+
+.reserva-body p {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    color: var(--text-secondary);
+}
+
+.dias-restantes {
+    margin-top: 0.6rem !important;
+    color: var(--accent) !important;
+}
+
+.reserva-actions {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+.btn-sm {
+    padding: 0.45rem 1rem;
+    font-size: 0.85rem;
+}
+
+.stiliza-toast {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999;
+    display: flex; align-items: center; gap: 0.7rem;
+    padding: 0.85rem 1.3rem; background: var(--text-primary); color: var(--bg-primary);
+    border-radius: 50px; font-size: 0.9rem; font-weight: 500;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18); opacity: 0; transform: translateY(16px);
+    transition: opacity 0.3s, transform 0.3s; max-width: 340px;
+}
+.stiliza-toast.show { opacity: 1; transform: translateY(0); }
+.stiliza-toast .toast-icon {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 0.75rem;
+}
+.stiliza-toast-error .toast-icon { background: #e74c3c; }
+.badge.vendido { background: rgba(45,122,90,0.15); color: #2d7a5a; }
+
+.emp-factura-box {
+    background: var(--bg-card); border-radius: 20px; padding: 1.5rem;
+    max-width: 420px; width: 92%; position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.emp-factura-cerrar {
+    position: absolute; top: 12px; right: 14px; border: none; background: var(--bg-secondary);
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+}
+.emp-factura-paper {
+    background: #fdfaf7; color: #1e1a16; padding: 1.5rem; border-radius: 12px;
+    font-size: 0.92rem; line-height: 1.6;
+}
+.stiliza-confirm-overlay {
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(30,26,22,0.45); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.25s;
+}
+.stiliza-confirm-overlay.show { opacity: 1; }
+.stiliza-confirm-box {
+    background: var(--bg-card); border-radius: 24px; padding: 2rem 1.8rem 1.6rem;
+    max-width: 360px; width: 90%; text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.stiliza-confirm-actions { display: flex; gap: 0.6rem; }
+.btn-confirm-cancel, .btn-confirm-ok {
+    flex: 1; padding: 0.7rem; border-radius: 50px; border: none; cursor: pointer; font-weight: 500;
+}
+.btn-confirm-cancel { background: var(--bg-secondary); }
+.btn-confirm-ok { background: var(--accent); color: #fff; }
+
+.metodos-pago-emp {
+    display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.4rem;
+}
+.metodo-chip {
+    display: flex; align-items: center; gap: 0.35rem;
+    padding: 0.55rem 1.1rem;
+    border: 1.5px solid var(--border-light);
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.2s;
+    background: var(--bg-secondary);
+}
+.metodo-chip:has(input:checked) {
+    border-color: var(--accent);
+    background: rgba(180,139,122,0.12);
+    color: var(--accent);
+    font-weight: 500;
+}
+.metodo-chip input { accent-color: var(--accent); }
+.venta-items-lista { display: flex; flex-direction: column; gap: 0.8rem; }
+.venta-item-row {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: flex-end;
+  padding: 0.9rem; background: var(--bg-secondary); border-radius: 14px;
+  border: 1px solid var(--border-light); position: relative;
+}
+.venta-item-row .form-group { margin: 0; min-width: 90px; flex: 1; }
+.venta-item-row input, .venta-item-row select {
+  width: 100%; padding: 0.55rem 0.75rem; border-radius: 30px;
+  border: 1.5px solid var(--input-border); background: var(--input-bg);
+  color: var(--text-primary);
+}
+.btn-quitar-linea {
+  border: none; background: rgba(192,57,43,0.1); color: #c0392b;
+  width: 36px; height: 36px; border-radius: 50%; cursor: pointer; margin-bottom: 0.2rem;
+}
+.venta-total-box {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.9rem 1.1rem; margin: 0.8rem 0 1rem;
+  background: rgba(180,139,122,0.12); border-radius: 14px; font-size: 1.05rem;
+}
+.venta-total-box strong { color: var(--accent); font-size: 1.2rem; }

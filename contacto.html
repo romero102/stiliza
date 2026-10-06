@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto · Stiliza</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contacto.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        const tema = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', tema);
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.webp" alt="Stiliza" class="logo-img" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <span class="logo-name">Stiliza</span>
+                    <span class="logo-sub">· vestidos que te definen</span>
+                </div>
+            </a>
+            <nav class="nav">
+                <a href="index.html">Inicio</a>
+                <a href="catalogo.html">Catálogo</a>
+                <a href="promociones.html">Promociones</a>
+                <a href="ubicacion.html">Ubicación</a>
+                <a href="contacto.html" class="active">Contacto</a>
+                <button id="toggleTheme" class="theme-toggle">🌙</button>
+                <div id="userInfo" class="user-info" style="display:none;"></div>
+                <button id="btnAbrirLogin" class="btn-login">Ingresar</button>
+                <a href="#" id="abrirCarrito" class="nav-carrito">
+                    <span class="carrito-icon">🛍️</span>
+                    <span class="carrito-badge" id="carritoBadge">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="contacto-page">
+        <div class="container">
+            <h1>✉️ Contáctanos</h1>
+            <p class="subtitulo">Estamos aquí para ayudarte a encontrar el vestido perfecto</p>
+
+            <div class="contacto-grid">
+                <div class="contacto-form-card">
+                    <h2>Envíanos un mensaje</h2>
+                    <p class="form-desc">Completa el formulario y te responderemos por WhatsApp</p>
+
+                    
+            <div class="aviso-medida">
+                <span class="aviso-medida-icon">✨</span>
+                <div>
+                    <strong>También hacemos vestidos a la medida</strong>
+                    <p>Si no encuentras tu talla o sueñas con un diseño único, escríbenos. Trabajamos pedidos personalizados según tu medida y estilo.</p>
+                </div>
+            </div>
+
+            <form id="formContacto">
+                        <div class="form-group">
+                            <label for="contactoNombre">Nombre completo *</label>
+                            <input type="text" id="contactoNombre" placeholder="Ej: María González" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactoEmail">Correo electrónico *</label>
+                            <input type="email" id="contactoEmail" placeholder="tu@correo.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactoMensaje">Mensaje *</label>
+                            <textarea id="contactoMensaje" rows="5" placeholder="Cuéntanos qué necesitas..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-pagar">
+                            <span>Enviar por WhatsApp</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="contacto-info-card">
+                    <h2>Otras formas de contacto</h2>
+
+                    <div class="contacto-metodo">
+                        <span class="metodo-icon">📞</span>
+                        <div>
+                            <h4>Teléfono / WhatsApp</h4>
+                            <a href="https://wa.me/59174954029" target="_blank">+591 74954029</a>
+                        </div>
+                    </div>
+
+                    <div class="contacto-metodo">
+                        <span class="metodo-icon">📧</span>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@stiliza.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contacto-metodo">
+                        <span class="metodo-icon">📍</span>
+                        <div>
+                            <h4>Dirección</h4>
+                            <p>Mercado Central Satélite Norte<br>Warnes, Santa Cruz, Bolivia</p>
+                        </div>
+                    </div>
+
+                    <div class="contacto-metodo">
+                        <span class="metodo-icon">🕐</span>
+                        <div>
+                            <h4>Horarios</h4>
+                            <p>Lun–Sáb: 9:00 – 20:00<br>Domingo: 10:00 – 18:00</p>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/59174954029?text=Hola%20Stiliza%2C%20quiero%20información" 
+                       target="_blank" 
+                       class="btn-whatsapp-grande">
+                        💬 Chatear ahora por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo">Stiliza<span>·</span></a>
+                    <p>Vestidos que te definen.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Enlaces</h5>
+                    <a href="catalogo.html">Catálogo</a>
+                    <a href="promociones.html">Promociones</a>
+                    <a href="ubicacion.html">Ubicación</a>
+                    <a href="contacto.html">Contacto</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Contacto</h5>
+                    <p>+591 74954029</p>
+                    <p>info@stiliza.com</p>
+                    <p>Mercado Central Satélite Norte, Warnes</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Síguenos</h5>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/condoripadillas" target="_blank" rel="noopener">Instagram</a>
+                        <a href="https://www.facebook.com/share/19QPyMTczA/" target="_blank" rel="noopener">Facebook</a>
+                        <a href="https://www.tiktok.com/@stilizavestidoselegancia" target="_blank" rel="noopener">TikTok</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <small>© 2026 Stiliza · Todos los derechos reservados</small>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="modalLogin">
+        <div class="modal-login">
+            <button class="cerrar-modal" id="cerrarModalLogin">✕</button>
+            <div class="modal-header">
+                <span class="modal-icon">✦</span>
+                <h2>Ingresar</h2>
+            </div>
+            <form id="formLogin">
+                <div class="form-group">
+                    <label for="loginName">Nombre (opcional)</label>
+                    <input type="text" id="loginName">
+                </div>
+                <div class="form-group">
+                    <label for="loginEmail">Correo *</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group" id="loginPassGroup" style="display:none;">
+                    <label for="loginPassword">Contraseña *</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" minlength="6">
+                </div>
+                <button type="submit" class="btn-pagar"><span>Continuar</span></button>
+                <div id="loginMensaje" class="mensaje-exito" style="display:none;"></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalCarrito">
+        <div class="modal-carrito">
+            <button class="cerrar-modal" id="cerrarModalCarrito">✕</button>
+            <div class="modal-header"><span class="modal-icon">🛍️</span><h2>Tu carrito</h2></div>
+            <div id="carritoContenido"></div>
+            <div class="carrito-total"><span>Total:</span><span id="totalCarrito">Bs 0.00</span></div>
+            <div class="anticipo-info"><p>Anticipo (20%): <strong id="anticipoCarrito">Bs 0.00</strong></p></div>
+            <div class="carrito-acciones">
+                <button class="btn btn-secundario" id="vaciarCarrito">Vaciar</button>
+                <button class="btn btn-primario" id="procederPago">Reservar (20%)</button>
+            </div>
+        </div>
+    </div>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/services/products.js"></script>
+    <script src="js/services/reservations.js"></script>
+    <script src="js/services/employees.js"></script>
+    <script src="js/services/messages.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/contacto.js"></script>
+</body>
+</html>

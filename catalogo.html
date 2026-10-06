@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo · Stiliza</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/catalogo.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        const tema = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', tema);
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.webp" alt="Stiliza" class="logo-img" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <span class="logo-name">Stiliza</span>
+                    <span class="logo-sub">· vestidos que te definen</span>
+                </div>
+            </a>
+            <nav class="nav">
+                <a href="index.html">Inicio</a>
+                <a href="catalogo.html" class="active">Catálogo</a>
+                <a href="promociones.html">Promociones</a>
+                <a href="ubicacion.html">Ubicación</a>
+                <a href="contacto.html">Contacto</a>
+                <button id="toggleTheme" class="theme-toggle">🌙</button>
+                <div id="userInfo" class="user-info" style="display:none;"></div>
+                <button id="btnAbrirLogin" class="btn-login">Ingresar</button>
+                <a href="#" id="abrirCarrito" class="nav-carrito">
+                    <span class="carrito-icon">🛍️</span>
+                    <span class="carrito-text">Carrito</span>
+                    <span class="carrito-badge" id="carritoBadge">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="catalogo-page">
+        <div class="container">
+            <h1>Nuestro Catálogo</h1>
+            <p class="subtitulo">Encuentra el vestido perfecto para cada ocasión</p>
+
+            <div class="filtros">
+                <button class="filtro-btn active" data-filtro="todos">Todos</button>
+                <button class="filtro-btn" data-filtro="gala">Gala</button>
+                <button class="filtro-btn" data-filtro="casual">Casual</button>
+                <button class="filtro-btn" data-filtro="fiesta">Fiesta</button>
+                <button class="filtro-btn" data-filtro="boda">Boda</button>
+                <button class="filtro-btn" data-filtro="quinceañera">Quinceañera</button>
+            </div>
+
+            <div class="grid" id="gridCatalogo">
+                <!-- Se llena con JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL DETALLE PRODUCTO -->
+    <div class="modal-overlay" id="modalDetalle">
+        <div class="modal-detalle">
+            <button class="cerrar-modal-detalle" id="cerrarModalDetalle">✕</button>
+            <div class="detalle-contenido">
+                <div class="detalle-col-izq">
+                    <div class="detalle-imagen">
+                        <img id="detalleImagen" src="" alt="Vestido">
+                        <div id="detalleImagenPlaceholder" class="detalle-placeholder" style="display:none;">✦</div>
+                    </div>
+                    <div class="detalle-comentarios" id="bloqueComentarios">
+                        <h4>Comentarios</h4>
+                        <div id="listaComentarios"></div>
+                        <div id="formComentarioWrap">
+                            <textarea id="inputComentario" rows="2" placeholder="Escribe un comentario (solo clientes registrados)..."></textarea>
+                            <button type="button" class="btn btn-primario btn-sm" id="btnEnviarComentario">Publicar</button>
+                        </div>
+                        <p id="avisoComentarioLogin" class="aviso-login-com" style="display:none;">Inicia sesión como cliente para comentar.</p>
+                    </div>
+                </div>
+                <div class="detalle-info">
+                    <span class="detalle-categoria" id="detalleCategoria">Categoría</span>
+                    <h2 id="detalleNombre">Nombre</h2>
+                    <p class="detalle-descripcion" id="detalleDescripcion">Descripción</p>
+                    <p class="detalle-material" id="detalleMaterial"></p>
+                    <div class="detalle-precio" id="detallePrecio">Bs 0.00</div>
+                    
+                    <div class="detalle-tallas">
+                        <span class="talla-label">Selecciona tu talla:</span>
+                        <div id="tallasContainer"></div>
+                    </div>
+
+                    <div class="detalle-social">
+                        <button type="button" class="btn-like" id="btnLikeVestido" title="Me gusta">
+                            <span id="iconLike">♡</span>
+                            <span id="countLike">0</span>
+                        </button>
+                    </div>
+                    <button class="btn-agregar-carrito-detalle" id="btnAgregarDetalle">
+                        🛍️ Añadir al carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CARRITO -->
+    <div class="modal-overlay" id="modalCarrito">
+        <div class="modal-carrito">
+            <button class="cerrar-modal" id="cerrarModalCarrito">✕</button>
+            <div class="modal-header">
+                <span class="modal-icon">🛍️</span>
+                <h2>Tu carrito</h2>
+            </div>
+            <div id="carritoContenido"></div>
+            <div class="carrito-total">
+                <span>Total:</span>
+                <span id="totalCarrito">Bs 0.00</span>
+            </div>
+            <div class="anticipo-info">
+                <p>Anticipo a pagar (20%): <strong id="anticipoCarrito">Bs 0.00</strong></p>
+            </div>
+            <div class="carrito-acciones">
+                <button class="btn btn-secundario" id="vaciarCarrito">Vaciar</button>
+                <button class="btn btn-primario" id="procederPago">Reservar (20%)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PAGO -->
+    <div class="modal-overlay" id="modalPago">
+        <div class="modal-pago">
+            <button class="cerrar-modal" id="cerrarModalPago">✕</button>
+            <div class="modal-header">
+                <span class="modal-icon">✦</span>
+                <h2>Reservar con anticipo</h2>
+                <p class="modal-sub">Pagas solo el <strong>20%</strong> ahora</p>
+                <p class="modal-sub"><span id="totalPago">Bs 0.00</span></p>
+            </div>
+            <div class="metodos-pago">
+                <button class="metodo-btn active" data-metodo="tarjeta"><span class="metodo-icon">💳</span> Tarjeta</button>
+                <button class="metodo-btn" data-metodo="qr"><span class="metodo-icon">📱</span> QR</button>
+            </div>
+            <form id="formPagoTarjeta" class="form-pago active">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo *</label>
+                    <input type="text" id="nombre" placeholder="Ej: María González" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="tel" id="telefono" placeholder="74954029">
+                </div>
+                <div class="form-group">
+                    <label for="tarjeta">Número de tarjeta</label>
+                    <input type="text" id="tarjeta" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="caducidad">MM/AA</label>
+                        <input type="text" id="caducidad" placeholder="12/28">
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" maxlength="4">
+                    </div>
+                </div>
+                <div class="aviso-reserva">
+                    ⚠️ Tienes <strong>7 días</strong> para recoger. Si no recoges, no hay reembolso del 20%.
+                </div>
+                <button type="submit" class="btn-pagar">
+                    <span>Pagar anticipo 20%</span>
+                    <span class="btn-arrow">→</span>
+                </button>
+            </form>
+            <form id="formPagoQR" class="form-pago">
+                <div class="form-group">
+                    <label for="nombre-qr">Nombre completo *</label>
+                    <input type="text" id="nombre-qr" placeholder="Ej: María González" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono-qr">Teléfono</label>
+                    <input type="tel" id="telefono-qr" placeholder="74954029">
+                </div>
+                <div class="qr-box pago-qr-elegante">
+                    <p class="qr-instruccion">Escanea el código con tu app bancaria para pagar el anticipo del 20%</p>
+                    <div class="qr-frame">
+                        <img src="assets/qr-pago.jpeg" alt="QR de pago Stiliza" class="qr-imagen"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="qr-placeholder" style="display:none;"><span>QR de pago</span></div>
+                    </div>
+                    <p class="qr-hint">Luego confirma el pago abajo</p>
+                </div>
+                <div class="aviso-reserva">
+                    ⚠️ Tienes <strong>7 días</strong> para recoger. Si no recoges, no hay reembolso del 20%.
+                </div>
+                <button type="submit" class="btn-pagar">
+                    <span>Ya pagué – Generar factura</span>
+                    <span class="btn-arrow">→</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL FACTURA -->
+    <div class="modal-overlay" id="modalFactura">
+        <div class="modal-factura">
+            <button class="cerrar-modal" id="cerrarModalFactura">✕</button>
+            <div id="facturaContenido">
+                <!-- Se genera dinámicamente -->
+            </div>
+            <div class="factura-acciones">
+                <button class="btn btn-primario" id="btnImprimirFactura">🖨️ Imprimir / PDF</button>
+                <button class="btn btn-secundario" id="btnDescargarImagen">📷 Descargar imagen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div class="modal-overlay" id="modalLogin">
+        <div class="modal-login">
+            <button class="cerrar-modal" id="cerrarModalLogin">✕</button>
+            <div class="modal-header">
+                <span class="modal-icon">✦</span>
+                <h2>Ingresar</h2>
+                <p class="modal-sub">Solo necesitas tu correo electrónico</p>
+            </div>
+            <form id="formLogin">
+                <div class="form-group">
+                    <label for="loginName">Nombre (opcional)</label>
+                    <input type="text" id="loginName" placeholder="Ej: María González">
+                </div>
+                <div class="form-group">
+                    <label for="loginEmail">Correo electrónico *</label>
+                    <input type="email" id="loginEmail" placeholder="tu@correo.com" required>
+                </div>
+                <div class="form-group" id="loginPassGroup" style="display:none;">
+                    <label for="loginPassword">Contraseña *</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" minlength="6">
+                </div>
+                <button type="submit" class="btn-pagar">
+                    <span>Continuar</span>
+                    <span class="btn-arrow">→</span>
+                </button>
+                <div id="loginMensaje" class="mensaje-exito" style="display:none;"></div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo">Stiliza<span>·</span></a>
+                    <p>Vestidos que te definen.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Enlaces</h5>
+                    <a href="catalogo.html">Catálogo</a>
+                    <a href="promociones.html">Promociones</a>
+                    <a href="ubicacion.html">Ubicación</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Contacto</h5>
+                    <p>+591 74954029</p>
+                    <p>info@stiliza.com</p>
+                    <p>Mercado Central Satélite Norte, Warnes</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Síguenos</h5>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/condoripadillas" target="_blank" rel="noopener">Instagram</a>
+                        <a href="https://www.facebook.com/share/19QPyMTczA/" target="_blank" rel="noopener">Facebook</a>
+                        <a href="https://www.tiktok.com/@stilizavestidoselegancia" target="_blank" rel="noopener">TikTok</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <small>© 2026 Stiliza · Todos los derechos reservados</small>
+            </div>
+        </div>
+    </footer>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/services/products.js"></script>
+    <script src="js/services/reservations.js"></script>
+    <script src="js/services/employees.js"></script>
+    <script src="js/services/messages.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/catalogo.js"></script>
+    <script src="js/factura.js"></script>
+</body>
+</html>

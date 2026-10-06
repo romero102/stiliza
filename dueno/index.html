@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Dueño · Stiliza</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/dueno.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        const tema = localStorage.getItem('theme_dueno') || 'light';
+        document.documentElement.setAttribute('data-theme', tema);
+    </script>
+</head>
+<body class="panel-body">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="../assets/logo.webp" alt="Stiliza" onerror="this.style.display='none'">
+            <span>Stiliza</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                <span>📊</span> Dashboard
+            </a>
+            <a href="#productos" class="nav-item" data-section="productos">
+                <span>👗</span> Productos
+            </a>
+            <a href="#reservas" class="nav-item" data-section="reservas">
+                <span>📋</span> Reservas
+            </a>
+            <a href="#empleados" class="nav-item" data-section="empleados">
+                <span>👥</span> Empleados
+            </a>
+            <a href="#estadisticas" class="nav-item" data-section="estadisticas">
+                <span>📈</span> Estadísticas
+            </a>
+            <a href="#destacados" class="nav-item" data-section="destacados">
+                <span>⭐</span> Destacados
+            </a>
+            <a href="#promociones" class="nav-item" data-section="promociones">
+                <span>🌸</span> Promociones
+            </a>
+            <a href="#mensajes" class="nav-item" data-section="mensajes">
+                <span>✉️</span> Mensajes
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button onclick="window.StilizaAuth.cerrarSesion()" class="btn-logout-panel">
+                Cerrar sesión
+            </button>
+            <a href="../index.html" class="link-cliente">← Ver tienda</a>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="panel-main">
+        <header class="panel-header">
+            <h1 id="panelTitle">Dashboard</h1>
+            <div class="panel-user">
+                <button id="toggleThemePanel" class="theme-toggle" type="button" title="Tema">🌙</button>
+                <span id="ownerEmail">dueno@stiliza.com</span>
+            </div>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="section-dashboard" class="panel-section active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-icon">🛍️</span>
+                    <div>
+                        <h3 id="statReservas">0</h3>
+                        <p>Reservas este mes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">💰</span>
+                    <div>
+                        <h3 id="statIngresos">Bs 0</h3>
+                        <p>Ingresos (anticipos)</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">👗</span>
+                    <div>
+                        <h3 id="statProductos">0</h3>
+                        <p>Productos activos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">⏳</span>
+                    <div>
+                        <h3 id="statPendientes">0</h3>
+                        <p>Por recoger</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-row">
+                <div class="card">
+                    <h3>Últimas reservas</h3>
+                    <div id="ultimasReservas" class="tabla-simple">
+                        <p class="empty-msg">Aún no hay reservas</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Empleado con más ventas</h3>
+                    <div id="topEmpleado" class="top-empleado">
+                        <p class="empty-msg">Sin datos aún</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCTOS -->
+        <section id="section-productos" class="panel-section">
+            <div class="section-actions">
+                <button class="btn btn-primario" id="btnNuevoProducto">+ Nuevo producto</button>
+            </div>
+            <div class="card">
+                <div id="listaProductos" class="productos-admin">
+                    <p class="empty-msg">Cargando productos...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESERVAS -->
+        <section id="section-reservas" class="panel-section">
+            <div class="card">
+                <div class="filtros-admin">
+                    <button class="filtro-admin active" data-filtro="todas">Todas</button>
+                    <button class="filtro-admin" data-filtro="pendiente">Pendientes</button>
+                    <button class="filtro-admin" data-filtro="recogido">Recogidas</button>
+                    <button class="filtro-admin" data-filtro="expirado">Expiradas</button>
+                </div>
+                <div id="listaReservas" class="tabla-admin">
+                    <p class="empty-msg">No hay reservas registradas</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EMPLEADOS -->
+        <section id="section-empleados" class="panel-section">
+            <div class="section-actions">
+                <button class="btn btn-primario" id="btnNuevoEmpleado">+ Crear empleado</button>
+            </div>
+            <div class="card">
+                <div id="listaEmpleados" class="empleados-lista">
+                    <p class="empty-msg">No hay empleados creados</p>
+                </div>
+            </div>
+
+            <!-- Formulario crear empleado -->
+            <div class="card" id="formEmpleadoCard" style="display:none; margin-top:1.5rem;">
+                <h3>Nuevo empleado</h3>
+                <form id="formNuevoEmpleado">
+                    <div class="form-group">
+                        <label>Nombre completo</label>
+                        <input type="text" id="empNombre" required placeholder="Ej: Ana López">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo electrónico (para acceder)</label>
+                        <input type="email" id="empEmail" required placeholder="empleado@correo.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña inicial *</label>
+                        <input type="password" id="empPassword" required minlength="6" placeholder="mín. 6 caracteres">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secundario" id="cancelarEmpleado">Cancelar</button>
+                        <button type="submit" class="btn btn-primario">Crear empleado</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ESTADÍSTICAS -->
+        <section id="section-estadisticas" class="panel-section">
+            <div class="card">
+                <h3>Top 3 vestidos más vendidos</h3>
+                <div id="top3Vestidos" class="top3-wrap"></div>
+            </div>
+            <div class="card" style="margin-top:1.5rem;">
+                <h3>Distribución de ventas</h3>
+                <div class="chart-wrap">
+                    <canvas id="chartVestidos" height="240"></canvas>
+                </div>
+                <div id="graficoVestidos" style="display:none;"></div>
+            </div>
+            <div class="card" style="margin-top:1.5rem;">
+                <h3>Ventas por empleado</h3>
+                <div class="chart-wrap" style="max-width:280px;">
+                    <canvas id="chartEmpleados" height="220"></canvas>
+                </div>
+                <div id="graficoEmpleados" class="emp-stats-list"></div>
+            </div>
+        </section>
+
+        <!-- PROMOCIONES -->
+        
+        <section id="section-destacados" class="panel-section">
+            <div class="section-actions">
+                <button class="btn btn-primario" id="btnNuevoDestacado">+ Agregar destacado</button>
+            </div>
+            <div class="card">
+                <p style="color:var(--text-muted);margin-bottom:1rem;">Estos vestidos aparecen en la portada en “Lo más destacado”.</p>
+                <div id="listaDestacados" class="destacados-admin"></div>
+            </div>
+            <div class="modal-overlay" id="modalDestacado">
+                <div class="modal-pago modal-destacado-form" style="max-width:560px;">
+                    <button class="cerrar-modal" id="cerrarModalDestacado">✕</button>
+                    <div class="modal-header">
+                        <h2>Nuevo vestido destacado</h2>
+                    </div>
+                    <p class="modal-sub">Se muestra en la portada. El cliente puede añadirlo al carrito sin ir al catálogo.</p>
+                    <form id="formDestacado">
+                        <div class="form-group">
+                            <label>Nombre del vestido *</label>
+                            <input type="text" id="destNombre" required placeholder="Ej: Vestido Gala Rubí">
+                        </div>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <textarea id="destDesc" rows="3" placeholder="Describe el vestido..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Material / Tela</label>
+                            <input type="text" id="destMaterial" placeholder="Ej: Satén, tul, encaje...">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Precio (Bs) *</label>
+                                <input type="number" id="destPrecio" min="0" step="0.01" required placeholder="0.00">
+                            </div>
+                            <div class="form-group">
+                                <label>Categoría</label>
+                                <select id="destCat">
+                                    <option value="gala">Gala</option>
+                                    <option value="boda">Boda</option>
+                                    <option value="quinceañera">Quinceañera</option>
+                                    <option value="fiesta">Fiesta</option>
+                                    <option value="casual">Casual</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Tallas disponibles</label>
+                            <div class="tallas-check" id="destTallasCheck">
+                                <label class="talla-chip"><input type="checkbox" name="destTalla" value="XS"> XS</label>
+                                <label class="talla-chip"><input type="checkbox" name="destTalla" value="S" checked> S</label>
+                                <label class="talla-chip"><input type="checkbox" name="destTalla" value="M" checked> M</label>
+                                <label class="talla-chip"><input type="checkbox" name="destTalla" value="L" checked> L</label>
+                                <label class="talla-chip"><input type="checkbox" name="destTalla" value="XL"> XL</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Imagen del vestido</label>
+                            <div class="img-upload-box" id="destImgUploadBox">
+                                <input type="file" id="destImagenFile" accept="image/*">
+                                <div class="img-upload-placeholder" id="destImgPlaceholder">
+                                    <span style="font-size:1.8rem;">📷</span>
+                                    <span>Haz clic o elige una foto</span>
+                                </div>
+                                <img id="destImagenPreviewImg" class="img-upload-preview" style="display:none;">
+                            </div>
+                            <input type="hidden" id="destImagen" value="">
+                        </div>
+                        <button type="submit" class="btn btn-primario" style="width:100%;">Guardar en destacados</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-promociones" class="panel-section">
+            <div class="section-actions">
+                <button class="btn btn-primario" id="btnNuevaPromo">+ Nueva promoción</button>
+            </div>
+            <div class="card">
+                <div id="listaPromos" class="promos-admin">
+                    <p class="empty-msg">No hay promociones activas</p>
+                </div>
+            </div>
+            <div class="modal-overlay" id="modalPromo">
+                <div class="modal-admin">
+                    <button class="cerrar-modal" id="cerrarModalPromo">✕</button>
+                    <h3 id="tituloModalPromo">Nueva promoción</h3>
+                    <form id="formPromo">
+                        <div class="form-group">
+                            <label>Título *</label>
+                            <input type="text" id="promoTitulo" required placeholder="Ej: Pack novia + damas">
+                        </div>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <textarea id="promoDesc" rows="3" placeholder="Detalle de la oferta"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Descuento %</label>
+                                <input type="number" id="promoDescPct" min="0" max="100" value="20">
+                            </div>
+                            <div class="form-group">
+                                <label>Categoría</label>
+                                <select id="promoCat">
+                                    <option value="boda">Boda</option>
+                                    <option value="quinceañera">Quinceañera</option>
+                                    <option value="gala">Gala</option>
+                                    <option value="fiesta">Fiesta</option>
+                                    <option value="casual">Casual</option>
+                                    <option value="general">General</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Etiqueta (texto corto)</label>
+                            <input type="text" id="promoLabel" placeholder="Ej: -20% · Navidad">
+                        </div>
+                        <div class="form-group">
+                            <label>Precio referencia (Bs) — opcional</label>
+                            <input type="number" id="promoPrecioBase" min="0" step="0.01" placeholder="Ej: 800 (antes del descuento)">
+                            <small style="color:var(--text-muted);font-size:0.8rem;">Si lo pones, el cliente agrega la promo al carrito con el precio ya rebajado.</small>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Duración (días) *</label>
+                                <input type="number" id="promoDias" min="1" value="20" required>
+                            </div>
+                            <div class="form-group">
+                                <label>O fecha de fin</label>
+                                <input type="date" id="promoFechaFin">
+                            </div>
+                        </div>
+                        <p style="font-size:0.82rem;color:var(--text-muted);margin:-0.4rem 0 0.8rem;">Si pones días, el contador baja solo cada día. Al llegar a 0 se oculta sola.</p>
+                        <div class="form-group">
+                            <label>Imagen</label>
+                            <input type="file" id="promoImagenFile" accept="image/*">
+                            <input type="hidden" id="promoImagen" value="">
+                            <div id="promoImagenPreview" style="margin-top:0.5rem;display:none;">
+                                <img id="promoImagenPreviewImg" src="" style="max-width:120px;border-radius:12px;">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primario" style="width:100%;">Guardar promoción</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    
+            <section id="section-mensajes" class="panel-section">
+                <div class="section-header">
+                    <h2>Mensajes de contacto</h2>
+                </div>
+                <div class="card-panel" id="listaMensajes">
+                    <p class="empty-msg">Los mensajes del formulario de contacto aparecerán aquí</p>
+                </div>
+            </section>
+
+        </main>
+
+    <!-- MODAL NUEVO PRODUCTO -->
+    <div class="modal-overlay" id="modalProducto">
+        <div class="modal-pago" style="max-width:560px;">
+            <button class="cerrar-modal" id="cerrarModalProducto">✕</button>
+            <div class="modal-header">
+                <h2>Nuevo / Editar producto</h2>
+            </div>
+            <form id="formProducto">
+                <div class="form-group">
+                    <label>Nombre del vestido *</label>
+                    <input type="text" id="prodNombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="prodDesc" rows="3" style="width:100%;padding:0.7rem;border-radius:12px;border:1.5px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Material / Tela</label>
+                    <input type="text" id="prodMaterial" placeholder="Ej: Satén, tul, encaje...">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Categoría *</label>
+                        <select id="prodCategoria" required style="width:100%;padding:0.7rem;border-radius:40px;border:1.5px solid var(--input-border);background:var(--input-bg);">
+                            <option value="gala">Gala</option>
+                            <option value="casual">Casual</option>
+                            <option value="fiesta">Fiesta</option>
+                            <option value="boda">Boda</option>
+                            <option value="quinceañera">Quinceañera</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio (Bs) *</label>
+                        <input type="number" id="prodPrecio" step="0.01" min="0" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Imagen del vestido</label>
+                    <div class="img-upload-box" id="imgUploadBox">
+                        <input type="file" id="prodImagenFile" accept="image/*">
+                        <div class="img-upload-placeholder" id="imgUploadPlaceholder">
+                            <span style="font-size:1.8rem;">📷</span>
+                            <span>Haz clic o arrastra una foto aquí</span>
+                            <small>JPG, PNG o WEBP</small>
+                        </div>
+                        <div id="prodImagenPreview" class="img-upload-preview" style="display:none;">
+                            <img id="prodImagenPreviewImg" src="" alt="Vista previa">
+                            <button type="button" class="img-remove" id="btnQuitarImg" title="Quitar">✕</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="prodImagen" value="">
+                </div>
+                <div class="form-group">
+                    <label>Tallas disponibles</label>
+                    <div class="tallas-check">
+                        <label><input type="checkbox" value="XS" checked> XS</label>
+                        <label><input type="checkbox" value="S" checked> S</label>
+                        <label><input type="checkbox" value="M" checked> M</label>
+                        <label><input type="checkbox" value="L" checked> L</label>
+                        <label><input type="checkbox" value="XL" checked> XL</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-pagar">Guardar producto</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script src="../js/services/products.js"></script>
+    <script src="../js/services/reservations.js"></script>
+    <script src="../js/services/employees.js"></script>
+    <script src="../js/services/messages.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/factura.js"></script>
+    <script src="js/dueno.js"></script>
+</body>
+</html>

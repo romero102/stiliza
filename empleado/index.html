@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Empleado · Stiliza</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/empleado.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        const tema = localStorage.getItem('theme_empleado') || 'light';
+        document.documentElement.setAttribute('data-theme', tema);
+    </script>
+</head>
+<body class="panel-body">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="../assets/logo.webp" alt="Stiliza" onerror="this.style.display='none'">
+            <span>Stiliza</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#reservas" class="nav-item active" data-section="reservas">
+                <span>📋</span> Reservas
+            </a>
+            <a href="#nueva-venta" class="nav-item" data-section="nueva-venta">
+                <span>➕</span> Nueva venta
+            </a>
+            <a href="#historial" class="nav-item" data-section="historial">
+                <span>📜</span> Historial
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button onclick="window.StilizaAuth.cerrarSesion()" class="btn-logout-panel">
+                Cerrar sesión
+            </button>
+            <a href="../index.html" class="link-cliente">← Ver tienda</a>
+        </div>
+    </aside>
+
+    <main class="panel-main">
+        <header class="panel-header">
+            <h1 id="panelTitle">Reservas</h1>
+            <div class="panel-user">
+                <button id="toggleThemePanel" class="theme-toggle" type="button" title="Tema">🌙</button>
+                <span id="empNombre">Empleado</span>
+            </div>
+        </header>
+
+        <!-- RESERVAS -->
+        <section id="section-reservas" class="panel-section active">
+            <div class="card">
+                <div class="filtros-admin">
+                    <button class="filtro-admin active" data-filtro="pendiente">Por recoger</button>
+                    <button class="filtro-admin" data-filtro="todas">Todas</button>
+                    <button class="filtro-admin" data-filtro="recogido">Recogidas</button>
+                <button class="filtro-admin" data-filtro="vendido">Ventas tienda</button>
+                    <button class="filtro-admin" data-filtro="expirado">Expiradas</button>
+                </div>
+
+                <div id="listaReservasEmp" class="reservas-lista">
+                    <!-- Ejemplo de tarjeta de reserva -->
+                    <div class="reserva-card">
+                        <div class="reserva-header">
+                            <strong>R-2026-00047</strong>
+                            <span class="badge pendiente">Pendiente</span>
+                        </div>
+                        <div class="reserva-body">
+                            <p><strong>Cliente:</strong> María González</p>
+                            <p><strong>Vestido:</strong> Vestido de Fiesta Modelo Aurora (Talla M)</p>
+                            <p><strong>Total:</strong> Bs 2.800,00</p>
+                            <p><strong>Anticipo pagado:</strong> Bs 560,00 (20%)</p>
+                            <p><strong>Saldo pendiente:</strong> Bs 2.240,00</p>
+                            <p class="dias-restantes">⏳ Le quedan <strong>5 días</strong> para recoger</p>
+                        </div>
+                        <div class="reserva-actions">
+                            <button class="btn btn-primario btn-sm">Marcar como recogido</button>
+                            <button class="btn btn-secundario btn-sm">Ver factura</button>
+                        </div>
+                    </div>
+
+                    <p class="empty-msg" style="display:none;">No hay reservas pendientes</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- NUEVA VENTA -->
+        <section id="section-nueva-venta" class="panel-section">
+            <div class="card">
+                <h3>Registrar venta en tienda</h3>
+                <p style="color:var(--text-muted);margin-bottom:1.5rem;">
+                    Usa este formulario cuando un cliente compre o reserve directamente en la boutique.
+                </p>
+                <form id="formNuevaVenta">
+                    <div class="form-group">
+                        <label>Nombre del cliente *</label>
+                        <input type="text" id="ventaCliente" required placeholder="Nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="ventaTelefono" placeholder="74954029">
+                    </div>
+                    <div class="form-group">
+                        <label>Vestidos de esta venta *</label>
+                        <div id="ventaItemsLista" class="venta-items-lista"></div>
+                        <button type="button" class="btn btn-secundario" id="btnAgregarItemVenta" style="margin-top:0.6rem;width:100%;">+ Agregar otro vestido</button>
+                    </div>
+                    <div class="venta-total-box">
+                        <span>Total venta</span>
+                        <strong id="ventaTotalLabel">Bs 0.00</strong>
+                    </div>
+<div class="form-group">
+                        <label>Método de pago *</label>
+                        <div class="metodos-pago-emp">
+                            <label class="metodo-chip">
+                                <input type="radio" name="ventaMetodo" value="efectivo" checked>
+                                <span>💵 Efectivo</span>
+                            </label>
+                            <label class="metodo-chip">
+                                <input type="radio" name="ventaMetodo" value="qr">
+                                <span>📱 QR</span>
+                            </label>
+                            <label class="metodo-chip">
+                                <input type="radio" name="ventaMetodo" value="tarjeta">
+                                <span>💳 Tarjeta</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="aviso-reserva">
+                        Al registrar se genera la factura y se guarda la venta.
+                    </div>
+                    <button type="submit" class="btn-pagar">Registrar venta y generar factura</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- HISTORIAL -->
+        <section id="section-historial" class="panel-section">
+            <div class="card">
+                <h3>Historial de movimientos</h3>
+                <div id="historialLista">
+                    <p class="empty-msg">Aún no hay movimientos registrados</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script src="../js/services/products.js"></script>
+    <script src="../js/services/reservations.js"></script>
+    <script src="../js/services/employees.js"></script>
+    <script src="../js/services/messages.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/factura.js"></script>
+    <script src="js/empleado.js"></script>
+</body>
+</html>

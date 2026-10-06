@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubicación · Stiliza</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ubicacion.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        const tema = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', tema);
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.webp" alt="Stiliza" class="logo-img" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <span class="logo-name">Stiliza</span>
+                    <span class="logo-sub">· vestidos que te definen</span>
+                </div>
+            </a>
+            <nav class="nav">
+                <a href="index.html">Inicio</a>
+                <a href="catalogo.html">Catálogo</a>
+                <a href="promociones.html">Promociones</a>
+                <a href="ubicacion.html" class="active">Ubicación</a>
+                <a href="contacto.html">Contacto</a>
+                <button id="toggleTheme" class="theme-toggle">🌙</button>
+                <div id="userInfo" class="user-info" style="display:none;"></div>
+                <button id="btnAbrirLogin" class="btn-login">Ingresar</button>
+                <a href="#" id="abrirCarrito" class="nav-carrito">
+                    <span class="carrito-icon">🛍️</span>
+                    <span class="carrito-badge" id="carritoBadge">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="ubicacion-page">
+        <div class="container">
+            <h1>📍 Nuestra boutique</h1>
+            <p class="subtitulo">Visítanos y descubre nuestra colección en persona</p>
+
+            <div class="ubicacion-grid">
+                <div class="info-contacto">
+                    <div class="info-item">
+                        <h3>📍 Dirección</h3>
+                        <p id="direccionTexto" class="direccion-click">Mercado Central Satélite Norte, Warnes, Santa Cruz, Bolivia</p>
+                        <small style="color:var(--text-muted);">Haz clic para copiar</small>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>🕐 Horarios de atención</h3>
+                        <p>Lunes a Sábado: <strong>9:00 – 20:00</strong></p>
+                        <p>Domingo: <strong>10:00 – 18:00</strong></p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>📞 Teléfono / WhatsApp</h3>
+                        <p><a href="tel:+59174954029" class="telefono-link">+591 74954029</a></p>
+                        <a href="https://wa.me/59174954029?text=Hola%20Stiliza%2C%20quiero%20información%20sobre%20sus%20vestidos" target="_blank" class="btn-whatsapp">
+                            💬 Escribir por WhatsApp
+                        </a>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>📧 Email</h3>
+                        <p>info@stiliza.com</p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>✨ Redes sociales</h3>
+                        <div class="redes-sociales">
+                            <a href="https://www.instagram.com/condoripadillas" target="_blank" rel="noopener" class="red-social">Instagram</a>
+                            <a href="https://www.facebook.com/share/19QPyMTczA/" target="_blank" rel="noopener" class="red-social">Facebook</a>
+                            <a href="https://www.tiktok.com/@stilizavestidoselegancia" target="_blank" rel="noopener" class="red-social">TikTok</a>
+                            <a href="https://wa.me/59174954029" target="_blank" class="red-social whatsapp-red">WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mapa-container">
+                    <div class="mapa">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3799.5!2d-63.169764!3d-17.693749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTfCsDQxJzM3LjUiUyA2M8KwMTAnMTEuMiJX!5e0!3m2!1ses!2sbo!4v1710000000000!5m2!1ses!2sbo" 
+                            width="100%" 
+                            height="450" 
+                            style="border:0; border-radius: 20px;" 
+                            allowfullscreen 
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Mercado+Central+Satelite+Norte+Warnes+Santa+Cruz+Bolivia" 
+                       target="_blank" 
+                       class="btn btn-primario btn-mapa">
+                        🗺️ Abrir en Google Maps
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo">Stiliza<span>·</span></a>
+                    <p>Vestidos que te definen.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Enlaces</h5>
+                    <a href="catalogo.html">Catálogo</a>
+                    <a href="promociones.html">Promociones</a>
+                    <a href="ubicacion.html">Ubicación</a>
+                    <a href="contacto.html">Contacto</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Contacto</h5>
+                    <p>+591 74954029</p>
+                    <p>info@stiliza.com</p>
+                    <p>Mercado Central Satélite Norte, Warnes</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Síguenos</h5>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/condoripadillas" target="_blank" rel="noopener">Instagram</a>
+                        <a href="https://www.facebook.com/share/19QPyMTczA/" target="_blank" rel="noopener">Facebook</a>
+                        <a href="https://www.tiktok.com/@stilizavestidoselegancia" target="_blank" rel="noopener">TikTok</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <small>© 2026 Stiliza · Todos los derechos reservados</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login + Carrito modales reutilizados via JS -->
+    <div class="modal-overlay" id="modalLogin">
+        <div class="modal-login">
+            <button class="cerrar-modal" id="cerrarModalLogin">✕</button>
+            <div class="modal-header">
+                <span class="modal-icon">✦</span>
+                <h2>Ingresar</h2>
+                <p class="modal-sub">Solo necesitas tu correo electrónico</p>
+            </div>
+            <form id="formLogin">
+                <div class="form-group">
+                    <label for="loginName">Nombre (opcional)</label>
+                    <input type="text" id="loginName" placeholder="Ej: María González">
+                </div>
+                <div class="form-group">
+                    <label for="loginEmail">Correo electrónico *</label>
+                    <input type="email" id="loginEmail" placeholder="tu@correo.com" required>
+                </div>
+                <div class="form-group" id="loginPassGroup" style="display:none;">
+                    <label for="loginPassword">Contraseña *</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" minlength="6">
+                </div>
+                <button type="submit" class="btn-pagar"><span>Continuar</span><span class="btn-arrow">→</span></button>
+                <div id="loginMensaje" class="mensaje-exito" style="display:none;"></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalCarrito">
+        <div class="modal-carrito">
+            <button class="cerrar-modal" id="cerrarModalCarrito">✕</button>
+            <div class="modal-header"><span class="modal-icon">🛍️</span><h2>Tu carrito</h2></div>
+            <div id="carritoContenido"></div>
+            <div class="carrito-total"><span>Total:</span><span id="totalCarrito">Bs 0.00</span></div>
+            <div class="anticipo-info"><p>Anticipo (20%): <strong id="anticipoCarrito">Bs 0.00</strong></p></div>
+            <div class="carrito-acciones">
+                <button class="btn btn-secundario" id="vaciarCarrito">Vaciar</button>
+                <button class="btn btn-primario" id="procederPago">Reservar (20%)</button>
+            </div>
+        </div>
+    </div>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/services/products.js"></script>
+    <script src="js/services/reservations.js"></script>
+    <script src="js/services/employees.js"></script>
+    <script src="js/services/messages.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/ubicacion.js"></script>
+</body>
+</html>
